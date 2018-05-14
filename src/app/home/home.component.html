@@ -1,7 +1,7 @@
 <br/>
 
 <div class="d-flex justify-content-center container">
-  <form #f="ngForm" (ngSubmit)="doSearch(f.value.searchTerm)" class="search-form-input">
+  <form #f="ngForm" (ngSubmit)="initSearch(f.value.searchTerm)" class="search-form-input">
     <div class="input-group input-group-lg d-flex justify-content-center">
       <input class="form-control" type="text" placeholder="Search" class="form-control" name="searchTerm" ngModel>
       <div class="input-group-append">
@@ -11,11 +11,40 @@
   </form>
 </div>
 <br/>
-  <span *ngFor="let res of searchResult">
-        <h4>{{res.title}}</h4>
-        <p class="card-text">{{res.body}}</p>
-<br/>
+
+
+<div class="search-results"
+     infiniteScroll
+     [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="50"
+     (scrolled)="onScrollDown()">
+
+   <span *ngFor="let res of originalSearchResult">
+
+     <div class="card" >
+  <div class="card-body">
+
+    <img *ngIf="res.cover_edition_key" class="float-left card-image" src="//covers.openlibrary.org/b/olid/{{res.cover_edition_key}}-M.jpg" alt="Card image cap" style="max-width:7em">
+    <img *ngIf="res.cover_edition_key == null" class="float-left card-image" src="{{defaultImage}}" alt="Card image cap" style="max-width:7em">
+    <h4 class="card-title">{{res.author_name}}</h4>
+    <h6 class="card-subtitle">Title :<strong>{{res.title}}</strong>
+      <br/>{{res.first_publish_year}} <span  *ngIf="res.isbn?.length > 0">- {{res.isbn[0]}}</span></h6>
+    <p class="card-text">Subjects :<strong>{{res.subject}}</strong></p>
+    <p class="card-text"><strong>{{res.edition_count}}</strong> Editions</p>
+  </div>
+       <!--
+        TITLE
+YEAR - ISBN
+Excerpts
+subjects
+X editions
+
+
+        -->
+
+
+</div>
+     <br/>
   </span>
 
-<ngb-pagination class="d-flex justify-content-center" [collectionSize]="70" [(page)]="page" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
-
+</div>

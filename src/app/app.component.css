@@ -1,0 +1,15 @@
+.card {
+  overflow: hidden;
+}
+
+.card-img-left {
+  position: absolute!;
+  height: auto;
+  max-height: 100%;
+  width: auto;
+  max-width: 40%;
+}
+
+.card-img-left ~ .card-body {
+  margin-left: 40%;
+}

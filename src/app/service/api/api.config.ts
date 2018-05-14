@@ -1,3 +1,3 @@
 export const ApiConfig = {
-  url: 'http://openlibrary.org/api/books/'
+  url: 'http://openlibrary.org/search.json?'
 };

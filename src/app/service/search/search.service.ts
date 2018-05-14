@@ -14,21 +14,23 @@ export class SearchService {
   ) {
     this.url = ApiConfig.url;
   }
-  find( search: string = null, page: number = 1, limit: number = 10 ): Observable<any> {
+  find( search: string = null, offset: number, limit: number = 40 ): Observable<any> {
     var params = new HttpParams();
+    let url = '';
     if (search) {
+      url = this.url + 'q=' + search.split(' ').join('+') + '&limit=' + limit + '&offset=' + offset;
       params.set('search', search);
     }
-    if (page) {
+   /* if (page) {
       params.set('page', String(page));
     }
     if (limit) {
       params.set('limit', String(limit));
-    }
-    console.log(this.http.get(this.url))
-    return this.http.get(this.url).pipe(
+    }*/
+    console.log(this.http.get(url))
+    return this.http.get(url).pipe(
       tap(data => {console.log('search fetched...');
-        console.log(data);
+        //console.log(data);
       }),
       catchError(this.handleError('find', []))
     );
