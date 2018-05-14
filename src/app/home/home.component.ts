@@ -8,18 +8,21 @@ import { SearchService } from '../service/search/search.service';
 })
 export class HomeComponent implements OnInit {
   public page: number;
-  public searchResult: any;
+  public  prevTerm: string;
+  public searchResult: Object[];
   constructor(private dataService: SearchService) {
     this.page = 1;
-    this.searchResult = {};
+    this.prevTerm = '';
+    this.searchResult = [];
   }
 
   ngOnInit() {
   }
 
   doSearch(searchTerm: string): void {
-    this.dataService.find(searchTerm, 1, 10).subscribe(data => {
-      console.log(data);
+    this.prevTerm = searchTerm !== this.prevTerm ? searchTerm : this.prevTerm;
+    this.dataService.find(this.prevTerm, 1, 10).subscribe(data => {
+      this.searchResult = data;
     });
   }
 

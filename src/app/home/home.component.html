@@ -1,5 +1,3 @@
-
-
 <br/>
 
 <div class="d-flex justify-content-center container">
@@ -12,5 +10,12 @@
     </div>
   </form>
 </div>
-  <ngb-pagination  class="d-flex justify-content-center"  [collectionSize]="70" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+<br/>
+  <span *ngFor="let res of searchResult">
+        <h4>{{res.title}}</h4>
+        <p class="card-text">{{res.body}}</p>
+<br/>
+  </span>
+
+<ngb-pagination class="d-flex justify-content-center" [collectionSize]="70" [(page)]="page" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
 
